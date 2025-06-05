@@ -1,0 +1,150 @@
+---
+- name: Machine setup
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: true
+  vars:
+    flyctl_version: "0.1.130"
+    pulumi_version: "v3.94.2"
+
+  tasks:
+    - name: Get my user
+      ansible.builtin.set_fact:
+        remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+
+    - name: Install packages
+      ansible.builtin.dnf:
+        name:
+          # Essentials
+          - git
+          - htop
+          - neovim
+          - fastfetch
+          - curl
+          - unzip
+          - gh
+          - gnome-tweaks
+          - ripgrep
+          - fzf
+          - zsh
+          - tmux
+#          - eza
+          - keepassxc
+          - zoxide
+          - flameshot
+          - kde-connect
+          - deskflow
+          - kitty
+
+          # ETC
+          - gcc
+          - ffmpeg-free
+          - make
+          - patch
+          - bzip2
+          - bzip2-devel
+          - readline-devel
+          - openssl-devel
+          - tk-devel
+          - libffi-devel
+          - xz-devel
+          - libuuid-devel
+          - gdbm-libs
+          - libnsl2
+          - luarocks
+          - wl-clipboard
+          - fd-find
+          - gcc-c++
+          - doctl
+          - autoconf
+          - ncurses-devel
+          - wxGTK-devel
+          - wxBase
+          - libxslt
+          - fop
+          - unar
+        state: present
+
+    - name: Change shell to zsh
+      ansible.builtin.user:
+        name: "{{ remote_regular_user }}"
+        shell: /usr/bin/zsh
+      changed_when: false
+
+    - name: Check if Zinit is already installed
+      ansible.builtin.stat:
+        path: "~{{ remote_regular_user }}/.local/share/zinit/zinit.git"
+      register: zinit_dir_stat
+      become: no # Run as the target_user for proper home dir check
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Install Zinit via curl script (if not already installed)
+      ansible.builtin.shell: |
+        bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
+      args:
+        creates: "~{{ remote_regular_user }}/.local/share/zinit/zinit.git" # This makes the task idempotent
+      become: no # Crucial: Run as the target_user
+      become_user: "{{ remote_regular_user }}"
+      when: not zinit_dir_stat.stat.exists # Only run if Zinit directory doesn't exist
+
+
+    - name: Install DNF plugins core
+      ansible.builtin.dnf:
+        name: dnf-plugins-core
+        state: present
+
+    - name: Import Microsoft GPG Key
+      ansible.builtin.rpm_key:
+        key: https://packages.microsoft.com/keys/microsoft.asc
+        state: present
+
+    - name: Install Flatpak packages
+      community.general.flatpak:
+        name:
+          - org.videolan.VLC
+          - org.tenacityaudio.Tenacity
+          - md.obsidian.Obsidian
+          - org.gimp.GIMP
+          - org.ferdium.Ferdium
+          - io.github.seadve.Kooha
+          - dev.vencord.Vesktop
+        state: present
+
+    - name: Add Google Chrome YUM repository
+      ansible.builtin.yum_repository:
+        name: google-chrome
+        description: google-chrome
+        baseurl: http://dl.google.com/linux/chrome/rpm/stable/x86_64
+        gpgcheck: yes
+        gpgkey: https://dl.google.com/linux/linux_signing_key.pub
+        enabled: yes
+      args:
+        validate_certs: no
+
+    - name: Install Google Chrome Stable
+      ansible.builtin.dnf:
+        name: google-chrome-stable
+        state: present
+
+    - name: Ensure fonts directory
+      ansible.builtin.file:
+        path: "~{{ remote_regular_user }}/.fonts"
+        state: directory
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
+
+    - name: Check if Nerd Font
+      ansible.builtin.shell: "ls ~{{ remote_regular_user }}/.fonts/GeistMonoNerdFont*.otf"
+      register: nerd_font_exists
+      ignore_errors: true
+      changed_when: false
+
+    - name: Download Nerd Font
+      when: nerd_font_exists is failed
+      ansible.builtin.unarchive:
+        src: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/GeistMono.zip
+        dest: "~{{ remote_regular_user }}/.fonts/"
+        remote_src: true
+        mode: "0755"
+        owner: "{{ remote_regular_user }}"
