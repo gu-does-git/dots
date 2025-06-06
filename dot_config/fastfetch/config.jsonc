@@ -34,11 +34,14 @@
             "showPeCoreCount": true
         },
         {
-            "key": "• {#35} memory  {#keys}•",
+            "key": "• {#35}{icon} gpu     {#keys}•",
+            "type": "gpu"
+        },
+        {
+            "key": "• {#36} memory  {#keys}•",
             "type": "memory"
         },
         {
-            "key": "• {#36}󰩟 network {#keys}•",
             "type": "localip",
             "format": "{ipv4}"
         },
