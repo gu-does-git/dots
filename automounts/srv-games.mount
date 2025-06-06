@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind mount for /srv/games
+After=network-online.target 
+Wants=network-online.target
+
+[Mount]
+What=192.168.1.201:/mnt/SSDs/games
+Where=/srv/games
+Type=nfs
+Options=defaults,_netdev,hard,intr
+
+[Install]
+WantedBy=multi-user.target

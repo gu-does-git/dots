@@ -1,0 +1,10 @@
+[Unit]
+Description=SMB Media Automount
+ConditionPathIsEmpty=/srv/media
+
+[Automount]
+Where=/srv/media
+TimeoutIdleSec=0
+
+[Install]
+WantedBy=multi-user.target

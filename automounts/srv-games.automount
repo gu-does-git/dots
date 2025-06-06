@@ -1,0 +1,10 @@
+[Unit]
+Description=SMB Games Automount
+ConditionPathIsEmpty=/srv/games
+
+[Automount]
+Where=/srv/games
+TimeoutIdleSec=0
+
+[Install]
+WantedBy=multi-user.target

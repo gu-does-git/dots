@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind mount for /srv/media
+After=network-online.target 
+Wants=network-online.target
+
+[Mount]
+What=192.168.1.201:/mnt/HDDs/media
+Where=/srv/media
+Type=nfs
+Options=defaults,_netdev,hard,intr
+
+[Install]
+WantedBy=multi-user.target

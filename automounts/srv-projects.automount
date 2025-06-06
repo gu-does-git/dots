@@ -1,0 +1,10 @@
+[Unit]
+Description=SMB Projects Automount
+ConditionPathIsEmpty=/srv/projects
+
+[Automount]
+Where=/srv/projects
+TimeoutIdleSec=0
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=SMB HDD Automount
+ConditionPathIsEmpty=/srv/hdds
+
+[Automount]
+Where=/srv/hdds
+TimeoutIdleSec=0
+
+[Install]
+WantedBy=multi-user.target
