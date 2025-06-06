@@ -3,7 +3,6 @@ alias cd="z"
 alias v="nvim"
 
 alias cls="clear"
-alias c="clear"
 alias clear="clear && ff"
 alias ff="fastfetch"
 
