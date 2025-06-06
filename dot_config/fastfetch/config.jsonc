@@ -38,10 +38,11 @@
             "type": "gpu"
         },
         {
-            "key": "• {#36} memory  {#keys}•",
+            "key": "• {#36}  memory {#keys}•",
             "type": "memory"
         },
         {
+            "key": "• {#37}{icon} local   {#keys}•",
             "type": "localip",
             "format": "{ipv4}"
         },
@@ -50,7 +51,7 @@
             "type": "custom"
         },
         {
-            "key": "• {#39} colors  {#keys}•",
+            "key": "• {#38} colors  {#keys}•",
             "type": "colors",
             "symbol": "circle"
         },
