@@ -1,0 +1,32 @@
+# General aliases
+alias cd="z"
+alias v="nvim"
+
+alias cls="clear"
+alias c="clear"
+alias clear="clear && ff"
+alias ff="fastfetch"
+
+# Config aliases
+alias chezmoi="~/bin/chezmoi"
+alias config="cd chezmoi && v ."
+
+# List aliases (replace with eza)
+alias ls="ls --color=auto -F" # Colorized, shows file types
+alias ll="ls -lFh" # Long format, shows file types, human-readable sizes
+alias la="ls -lAFh" # Long format, show almost all (including dotfiles), file types, human-readable sizes
+
+# Confirm prompts
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# Git Aliases
+alias gs="git status"
+alias gss="git status -s"
+alias ga="git add"
+alias gaa="git add --all"
+alias gcm="git commit -m"
+alias gca="git commit -a -m"
+alias gp="git push"
+alias gl="git pull"
