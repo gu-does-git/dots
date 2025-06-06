@@ -9,10 +9,4 @@ This automated setup is currently only configured for Fedora machines.
 ```shell
 ## Install the dotfiles
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply git@github.com:gu-does-git/dots.git
-
-## Install kickstart.nvim
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
-
-## Re-apply the nvim config
-chezmoi apply
 ```
