@@ -63,15 +63,17 @@ echo "Adding symbolic links..."
 
 # Remove all target dirs
 SYMBOLIC_TARGETS=(
-"$HOME/Documents",
-"$HOME/Downloads",
-"$HOME/Music",
-"$HOME/Pictures",
-"$HOME/Videos",
+"$HOME/Documents"
+"$HOME/Downloads"
+"$HOME/Music"
+"$HOME/Pictures"
+"$HOME/Videos"
 )
 for TARGET in "${SYMBOLIC_TARGETS[@]}"; do
     if [ -d "$TARGET" ]; then
-        sudo rm -rf "$TARGET" # Use -rf for forceful recursive removal, typical for cleanup
+        sudo rm -rf $TARGET # Use -rf for forceful recursive removal, typical for cleanup
+    else 
+        echo "Target $TARGET not found."
     fi
 done
 
@@ -84,16 +86,7 @@ LINKS=(
 "/srv/hdds/Videos $HOME"
 )
 for LINK in "${LINKS[@]}"; do
-    # Split the link pair into source and destination
-    read -r LINK_SOURCE LINK_DEST_BASE <<< "$LINK_PAIR"
-    LINK_DEST="$LINK_DEST_BASE/$(basename "$LINK_SOURCE")" # e.g., /home/user/Documents
-    
-    # Ensure the source of the link exists before trying to link
-    if [ -e "$LINK_SOURCE" ]; then
-        sudo ln -s "$LINK_SOURCE" "$LINK_DEST"
-    else
-        echo "Warning: Link source '$LINK_SOURCE' does not exist. Skipping symbolic link for $LINK_DEST."
-    fi
+    sudo ln -s $LINK
 done
 
 echo "Automount finished."
