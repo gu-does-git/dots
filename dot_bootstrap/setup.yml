@@ -35,9 +35,9 @@
           - flameshot
           - kde-connect
           - deskflow
-          - kitty
 
           # ETC
+          - python3
           - gcc
           - ffmpeg-free
           - make
@@ -88,7 +88,6 @@
       become_user: "{{ remote_regular_user }}"
       when: not zinit_dir_stat.stat.exists # Only run if Zinit directory doesn't exist
 
-
     - name: Install DNF plugins core
       ansible.builtin.dnf:
         name: dnf-plugins-core
@@ -109,6 +108,7 @@
           - org.ferdium.Ferdium
           - io.github.seadve.Kooha
           - dev.vencord.Vesktop
+          - io.github.yuki_iptv.yuki-iptv
         state: present
 
     - name: Add Google Chrome YUM repository
