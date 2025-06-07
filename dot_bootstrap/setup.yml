@@ -23,6 +23,7 @@
           - fastfetch
           - curl
           - unzip
+          - unrar
           - gh
           - gnome-tweaks
           - ripgrep
