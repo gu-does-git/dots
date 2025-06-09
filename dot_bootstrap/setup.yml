@@ -102,6 +102,7 @@
     - name: Install Flatpak packages
       community.general.flatpak:
         name:
+          - net.ankiweb.Anki
           - org.videolan.VLC
           - org.tenacityaudio.Tenacity
           - md.obsidian.Obsidian
