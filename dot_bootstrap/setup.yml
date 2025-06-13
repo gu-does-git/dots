@@ -151,3 +151,19 @@
         remote_src: true
         mode: "0755"
         owner: "{{ remote_regular_user }}"
+
+    - name: Check if bun is already installed
+      ansible.builtin.stat:
+        path: "~{{ remote_regular_user }}/.bun"
+      register: bun_dir_stat
+      become: no # Run as the target_user for proper home dir check
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Install bun
+      ansible.builtin.shell: |
+        bash -c "curl -fsSL https://bun.sh/install | bash"
+      args:
+        creates: "~{{ remote_regular_user }}/.bun" # This makes the task idempotent
+      become: no # Crucial: Run as the target_user
+      become_user: "{{ remote_regular_user }}"
+      when: not bun_dir_stat.stat.exists # Only run if bun directory doesn't exist
