@@ -34,8 +34,9 @@
           - keepassxc
           - zoxide
           - flameshot
-          - kde-connect
+#          - kde-connect
           - deskflow
+          - google-noto-cjk-fonts
 
           # ETC
           - python3
