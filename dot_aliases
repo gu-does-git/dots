@@ -29,3 +29,6 @@ alias gcm="git commit -m"
 alias gca="git commit -a -m"
 alias gp="git push"
 alias gl="git pull"
+
+# Chrome stuff
+alias fixchrome="killall chrome && rm -f ~/.config/google-chrome/Singleton{Cookie,Lock,Socket}"
