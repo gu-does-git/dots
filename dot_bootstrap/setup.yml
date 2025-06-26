@@ -112,6 +112,8 @@
           - io.github.seadve.Kooha
           - dev.vencord.Vesktop
           - io.github.yuki_iptv.yuki-iptv
+          - com.stremio.Stremio
+          - com.spotify.Client
         state: present
 
     - name: Add Google Chrome YUM repository
