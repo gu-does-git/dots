@@ -30,5 +30,6 @@ alias gca="git commit -a -m"
 alias gp="git push"
 alias gl="git pull"
 
-# Chrome stuff
-alias fixchrome="killall chrome && rm -f ~/.config/google-chrome/Singleton{Cookie,Lock,Socket}"
+# force-fix stuff
+alias fixchrome="rm -f ~/.config/google-chrome/Singleton{Cookie,Lock,Socket}"
+alias fixspotify="rm -rf ~/.var/app/com.spotify.Client/cache/*"
