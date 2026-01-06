@@ -35,11 +35,24 @@
           - zoxide
           - flameshot
 #          - kde-connect
-          - deskflow
+#          - deskflow
           - google-noto-cjk-fonts
+          - antimicrox
+          - tailscale
+          - ddcutil
+          - gamescope
+          - mame-tools
+          - mpv
 
           # ETC
+          - glfw-devel
+          - libguestfs-tools
+          - mesa-va-drivers
+          - mesa-vdpau-drivers
+          - libavcodec-freeworld
+          - libva-utils
           - python3
+          - python3-pip
           - gcc
           - ffmpeg-free
           - make
@@ -66,6 +79,7 @@
           - libxslt
           - fop
           - unar
+          - golang
         state: present
 
     - name: Change shell to zsh
@@ -114,6 +128,11 @@
           - io.github.yuki_iptv.yuki-iptv
           - com.stremio.Stremio
           - com.spotify.Client
+          - org.prismlauncher.PrismLauncher
+          - org.deskflow.deskflow
+          - com.github.tchx84.Flatseal
+          - org.pegasus_frontend.Pegasus
+          - net.retrodeck.retrodeck
         state: present
 
     - name: Add Google Chrome YUM repository

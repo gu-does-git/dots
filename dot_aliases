@@ -33,3 +33,6 @@ alias gl="git pull"
 # force-fix stuff
 alias fixchrome="rm -f ~/.config/google-chrome/Singleton{Cookie,Lock,Socket}"
 alias fixspotify="rm -rf ~/.var/app/com.spotify.Client/cache/*"
+
+# custom "programs"
+alias oneclickanki="cd ~/asbplayer-web-socket-server && go run main.go"
