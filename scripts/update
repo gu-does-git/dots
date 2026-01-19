@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+info() { printf '%s\n' "$*"; }
+
+# 1) System upgrade (dnf)
+if command -v dnf >/dev/null 2>&1; then
+  info "Running: sudo dnf upgrade --refresh -y"
+  sudo dnf upgrade --refresh -y
+else
+  info "dnf not found on this host; skipping system upgrade"
+fi
+
+# 2) Ansible: find binary
+if ! command -v ansible-playbook >/dev/null 2>&1; then
+  info "ansible-playbook not found; skipping ansible playbook run"
+  exit 0
+fi
+
+# 3) Locate playbook (can be overridden via ANSIBLE_PLAYBOOK env)
+playbook="${ANSIBLE_PLAYBOOK:-}"
+candidates=( "~/.bootstrap/setup.yml" "./ansible/playbook.yml" "./site.yml" "./ansible/site.yml" "./playbooks/playbook.yml" )
+
+if [ -z "$playbook" ]; then
+  for p in "${candidates[@]}"; do
+    if [ -f "$p" ]; then
+      playbook="$p"
+      break
+    fi
+  done
+fi
+
+if [ -z "$playbook" ]; then
+  info "No playbook found in common locations. Set ANSIBLE_PLAYBOOK to the path to your playbook (relative to chezmoi source), e.g.:"
+  info "  ANSIBLE_PLAYBOOK=ansible/playbook.yml chezmoi run update"
+  exit 0
+fi
+
+# 4) Build ansible-playbook command
+ansible_args="${ANSIBLE_ARGS:-}"
+# ensure update-tag is present (user will tag tasks as 'update')
+info "Running: ansible-playbook ${playbook} --tags update ${ansible_args}"
+ansible-playbook "${playbook}" --tags update ${ansible_args}

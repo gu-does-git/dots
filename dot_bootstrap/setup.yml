@@ -43,6 +43,7 @@
           - gamescope
           - mame-tools
           - mpv
+          - qbittorrent
 
           # ETC
           - glfw-devel
